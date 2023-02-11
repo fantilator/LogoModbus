@@ -1,0 +1,179 @@
+0
+>>>
+>>> # Connect to the Modbus server
+>>> try:
+...     client = ModbusClient(host=IP_address, port=Modbus_Port, unit_id=UnitID)
+...     client.connect()
+... except Exception as e:
+...     print("Error connecting to the Modbus server:", e)
+...     exit()
+...
+True
+>>> # Read Discrete Inputs
+>>> start_I_number = 0
+>>> number_of_Iinputs = 24
+>>> Idiscrete_inputs = read_discrete_inputs(client, start_I_number, number_of_Iinputs)
+>>> for i in range(number_of_Iinputs):
+...     print("I{}: {} = {}".format(i+1, start_I_number + i, Idiscrete_inputs[i]))
+...
+I1: 0 = False
+I2: 1 = False
+I3: 2 = False
+I4: 3 = False
+I5: 4 = False
+I6: 5 = False
+I7: 6 = False
+I8: 7 = False
+I9: 8 = False
+I10: 9 = False
+I11: 10 = False
+I12: 11 = False
+I13: 12 = False
+I14: 13 = False
+I15: 14 = False
+I16: 15 = False
+I17: 16 = False
+I18: 17 = False
+I19: 18 = False
+I20: 19 = False
+I21: 20 = False
+I22: 21 = False
+I23: 22 = False
+I24: 23 = False
+>>> # Read Coils
+>>> start_M_number = 8256
+>>> number_of_Mcoils = 64
+>>> Mcoils = read_coils(client, start_M_number, number_of_Mcoils)
+>>> for j in range(number_of_Mcoils):
+...     print("M{}: {} = {}".format(j+1, start_M_number + j, Mcoils[j]))
+...
+M1: 8256 = True
+M2: 8257 = False
+M3: 8258 = False
+M4: 8259 = False
+M5: 8260 = False
+M6: 8261 = False
+M7: 8262 = False
+M8: 8263 = False
+M9: 8264 = False
+M10: 8265 = False
+M11: 8266 = False
+M12: 8267 = False
+M13: 8268 = False
+M14: 8269 = False
+M15: 8270 = False
+M16: 8271 = False
+M17: 8272 = False
+M18: 8273 = False
+M19: 8274 = False
+M20: 8275 = False
+M21: 8276 = False
+M22: 8277 = False
+M23: 8278 = False
+M24: 8279 = False
+M25: 8280 = False
+M26: 8281 = False
+M27: 8282 = False
+M28: 8283 = False
+M29: 8284 = False
+M30: 8285 = False
+M31: 8286 = False
+M32: 8287 = False
+M33: 8288 = False
+M34: 8289 = False
+M35: 8290 = False
+M36: 8291 = False
+M37: 8292 = False
+M38: 8293 = False
+M39: 8294 = False
+M40: 8295 = False
+M41: 8296 = False
+M42: 8297 = False
+M43: 8298 = False
+M44: 8299 = False
+M45: 8300 = False
+M46: 8301 = False
+M47: 8302 = False
+M48: 8303 = False
+M49: 8304 = False
+M50: 8305 = False
+M51: 8306 = False
+M52: 8307 = False
+M53: 8308 = False
+M54: 8309 = False
+M55: 8310 = False
+M56: 8311 = False
+M57: 8312 = False
+M58: 8313 = False
+M59: 8314 = False
+M60: 8315 = False
+M61: 8316 = False
+M62: 8317 = False
+M63: 8318 = False
+M64: 8319 = False
+>>> # Read Outputs
+>>> start_Q_number = 8192
+>>> number_of_Qcoils = 20
+>>> Qcoils = read_coils(client, start_Q_number, number_of_Qcoils)
+>>> for k in range(number_of_Qcoils):
+...     print("Q{}: {} = {}".format(k+1, start_Q_number + k, Qcoils[k]))
+...
+Q1: 8192 = False
+Q2: 8193 = False
+Q3: 8194 = False
+Q4: 8195 = False
+Q5: 8196 = False
+Q6: 8197 = False
+Q7: 8198 = True
+Q8: 8199 = False
+Q9: 8200 = False
+Q10: 8201 = False
+Q11: 8202 = False
+Q12: 8203 = False
+Q13: 8204 = False
+Q14: 8205 = False
+Q15: 8206 = False
+Q16: 8207 = False
+Q17: 8208 = False
+Q18: 8209 = False
+Q19: 8210 = False
+Q20: 8211 = False
+>>> # Read Analog Inputs
+>>> start_AI_number = 0
+>>> number_of_AIcoils = 8
+>>> AIdiscrete_inputs = read_discrete_inputs(client, start_AI_number, number_of_AIcoils)
+>>> for n in range(number_of_AIcoils):
+...     print("AI{}: {} = {}".format(n+1, start_AI_number + n, AIdiscrete_inputs[n]))
+...
+AI1: 0 = False
+AI2: 1 = False
+AI3: 2 = False
+AI4: 3 = False
+AI5: 4 = False
+AI6: 5 = False
+AI7: 6 = False
+AI8: 7 = False
+>>>
+>>> # Read Analog coils
+>>> start_AM_number = 0x210
+>>> number_of_AMcoils = 64
+>>> AMcoils = read_holding_registers(client, start_AM_number, number_of_AMcoils)
+>>> for l in range(number_of_AMcoils):
+...     print("AM{}: {} = {}".format(l+1, start_AM_number + l, AMcoils[k]))
+...
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+TypeError: 'NoneType' object is not subscriptable
+>>> # Read Analog Outputs
+>>> start_AQ_number = 0x200
+>>> number_of_AQcoils = 8
+>>> AQcoils = read_holding_registers(client, start_AQ_number, number_of_AQcoils)
+>>> for m in range(number_of_Qcoils):
+...     print("AQ{}: {} = {}".format(m+1, start_AQ_number + m, AQcoils[m]))
+...
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+TypeError: 'NoneType' object is not subscriptable
+>>> client.close()
+>>>
+>>>
