@@ -1,0 +1,107 @@
+
+from pymodbus.client import ModbusTcpClient as ModbusClient
+from pymodbus.payload import BinaryPayloadDecoder
+from pymodbus.constants import Endian
+
+client = ModbusClient('192.168.1.185', port=503)
+client.connect()
+
+result = client.read_holding_registers(0x212, 1)
+decoder = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.Big, wordorder=Endian.Big)
+value = decoder.decode_16bit_uint()
+if not result.isError():
+    decoder = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.Big, wordorder=Endian.Big)
+    value = decoder.decode_16bit_uint()
+    print("AM3:", value)
+else:
+    print("Error reading holding registers:", result)
+
+client.close()
+
+try:
+  client = ModbusClient(host="192.168..185", port=503, unit_id=255)
+  client.connect()
+  data = client.read_coils(8258, 1)
+  if data:
+    print("Coil value:", data[0])
+  else:
+    print("No data received")
+  client.close()
+except:
+  print("Error reading coil")
+
+
+
+
+
+
+from pymodbus.client import ModbusTcpClient as ModbusClient
+from pymodbus.payload import BinaryPayloadDecoder
+from pymodbus.constants import Endian
+import os
+
+#
+# Varaibles
+#
+
+IP_address = "192.168.1.185"
+Modbus_Port = "503"
+OnitID = "255"
+
+os.system('cls')    # for Windows
+
+client = ModbusClient(host=IP_address, port=Modbus_Port, unit_id=UnitID)
+client.connect()
+
+Start_I_number = 0
+resultI = client.read_discrete_inputs(Start_I_number, 24)
+if not resultI.isError():
+    coilsI = resultI.bits
+    for i in range(24):
+        print("I{}: {} = {}".format(i+1, Start_I_number +i , coilsI[i]))
+else:
+    print("Error reading inputs:", resultI)
+
+Start_M_number = 8256
+resultM = client.read_coils(Start_M_number, 64)
+if not resultM.isError():
+    coilsM = resultM.bits
+    for j in range(64):
+        print("M{}: {} = {}".format(j+1, Start_M_number + j, coilsM[j]))
+else:
+    print("Error reading Merker:", resultM)
+
+Start_Q_number = 8192
+resultQ = client.read_coils(Start_Q_number, 20)
+if not resultQ.isError():
+    coilsQ = resultQ.bits
+    for k in range(20):
+        print("Q{}: {} = {}".format(k+1, Start_Q_number + k, coilsQ[k]))
+else:
+    print("Error reading Outputs:", resultQ)
+	
+Start_AM_number = 0x210	
+resultAM = client.read_holding_registers(Start_AM_number, 64)
+decoder = BinaryPayloadDecoder.fromRegisters(resultAM.registers, byteorder=Endian.Big, wordorder=Endian.Big)
+analogValuesAM = decoder.decode_16bit_uint()
+if not resultAM.isError():
+    decoder = BinaryPayloadDecoder.fromRegisters(resultAM.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+    analogValuesAM = [decoder.decode_16bit_uint() for l in range(64)]
+    for l in range(64):
+        print("AM{}: {} = {}".format(l+1, Start_AM_number +l, analogValuesAM[l]))
+else:
+    print("Error reading Analog Merker:", resultAM)
+
+Start_AQ_number = 0x200
+resultAQ = client.read_holding_registers(Start_AQ_number, 8)
+decoder = BinaryPayloadDecoder.fromRegisters(resultAQ.registers, byteorder=Endian.Big, wordorder=Endian.Big)
+analogValuesAQ = decoder.decode_16bit_uint()
+if not resultAQ.isError():
+    decoder = BinaryPayloadDecoder.fromRegisters(resultAQ.registers, byteorder=Endian.Big, wordorder=Endian.Little)
+    analogValuesAQ = [decoder.decode_16bit_uint() for m in range(8)]
+    for m in range(8):
+        print("AQ{}: {} = {}".format(m+1, Start_AQ_number + m, analogValuesAQ[m]))
+else:
+    print("Error reading Analog Outputs:", resultAQ)
+
+client.close()
